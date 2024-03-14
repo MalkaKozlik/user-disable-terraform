@@ -1,22 +1,32 @@
-resource "azurerm_resource_group" "resource_group" {
+# resource "azurerm_resource_group" "resource_group" {
+#   name     = var.rg_name
+#   location = var.rg_location
+# }
+
+# resource "azurerm_storage_account" "storage_account" {
+#   name                     = var.storage_account_name
+#   resource_group_name      = azurerm_resource_group.resource_group.name
+#   location                 = azurerm_resource_group.resource_group.location
+#   account_tier             = "Standard"
+#   account_replication_type = "LRS"
+# }
+
+data "azurerm_resource_group" "resource_group" {
   name     = var.rg_name
-  location = var.rg_location
 }
 
-resource "azurerm_storage_account" "storage_account" {
+data "azurerm_storage_account" "storage_account" {
   name                     = var.storage_account_name
-  resource_group_name      = azurerm_resource_group.resource_group.name
-  location                 = azurerm_resource_group.resource_group.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
+  resource_group_name      = data.azurerm_resource_group.resource_group.name
 }
+
 
 data "azurerm_client_config" "current_client" {}
 
 resource "azurerm_key_vault" "key_vault" {
   name                       = var.key_vault_name
   location                   = var.rg_location
-  resource_group_name        = azurerm_storage_account.storage_account.resource_group_name
+  resource_group_name        = data.azurerm_storage_account.storage_account.resource_group_name
   soft_delete_retention_days = 7
   tenant_id                  = data.azurerm_client_config.current_client.tenant_id
   sku_name                   = var.key_vault_sku_name
@@ -33,7 +43,7 @@ resource "azurerm_key_vault" "key_vault" {
 
 resource "azurerm_key_vault_secret" "key_vault_secret" {
   name         = var.key_vault_secret_name
-  value        = azurerm_storage_account.storage_account.primary_connection_string
+  value        = data.azurerm_storage_account.storage_account.primary_connection_string
   key_vault_id = azurerm_key_vault.key_vault.id
 }
 
