@@ -2,7 +2,7 @@ terraform {
   backend "azurerm" {
     resource_group_name  = "NetworkWatcherRG"
     storage_account_name = "myfirsttrail"
-    container_name       = "terraform-state"
+    container_name       = "terraform-user-disable"
     key                  = "terraform.tfstate"
   }
   
