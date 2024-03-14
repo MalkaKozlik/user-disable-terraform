@@ -27,7 +27,7 @@ data "azurerm_key_vault" "key_vault" {
   resource_group_name = var.key_vault_resource_group_name
 }
 
-# add data. to resource_group_name and location(ct)
+# add data. before azurerm_storage_account(ct)
 resource "azurerm_service_plan" "service_plan" {
   name                = var.app_service_plan_name
   resource_group_name = data.azurerm_storage_account.storage_account.resource_group_name
@@ -35,13 +35,13 @@ resource "azurerm_service_plan" "service_plan" {
   os_type             = "Linux"
   sku_name            = "P1v2"
 }
-
+# add data. before azurerm_storage_account(ct)
 resource "azurerm_linux_function_app" "linux_function_app" {
   name                        = var.function_app_name
-  resource_group_name         = azurerm_storage_account.storage_account.resource_group_name
-  location                    = azurerm_storage_account.storage_account.location
-  storage_account_name        = azurerm_storage_account.storage_account.name
-  storage_account_access_key  = azurerm_storage_account.storage_account.primary_access_key
+  resource_group_name         = data.azurerm_storage_account.storage_account.resource_group_name
+  location                    = data.azurerm_storage_account.storage_account.location
+  storage_account_name        = data.azurerm_storage_account.storage_account.name
+  storage_account_access_key  = data.azurerm_storage_account.storage_account.primary_access_key
   service_plan_id             = azurerm_service_plan.service_plan.id
   functions_extension_version = "~4"
 
