@@ -1,7 +1,12 @@
-resource "azurerm_resource_group" "resource_group" {
+# resource "azurerm_resource_group" "resource_group" {
+#   name     = var.rg_name
+#   location = var.rg_location
+# }
+# -----------------------------------------------------------------------
+data "azurerm_resource_group" "resource_group" {
   name     = var.rg_name
-  location = var.rg_location
 }
+# ---------------------------------------------------------------------
 
 # resource "azurerm_storage_account" "storage_account" {
 #   name                     = var.storage_account_name
