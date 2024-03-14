@@ -38,7 +38,7 @@ jobs:
 
       - name: echo
         run: |
-          echo $CREDS
+          echo $CREDS.tenantId
 
       # - name: 🔑 Login to Azure
         # id : az-login
