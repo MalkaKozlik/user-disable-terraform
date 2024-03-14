@@ -21,6 +21,12 @@ env:
   
 jobs:
   job1:
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
