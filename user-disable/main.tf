@@ -78,12 +78,12 @@ resource "azurerm_linux_function_app" "linux_function_app" {
     type = "SystemAssigned"
   }
 }
-
+# # add data. before azurerm_storage_account(ct)
 resource "azurerm_linux_function_app_slot" "linux_function_app_slot" {
   name                       = "development"
   function_app_id            = azurerm_linux_function_app.linux_function_app.id
-  storage_account_name       = azurerm_storage_account.storage_account.name
-  storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
+  storage_account_name       = data.azurerm_storage_account.storage_account.name
+  storage_account_access_key = data.azurerm_storage_account.storage_account.primary_access_key
   site_config {
     always_on = true
     application_stack {
