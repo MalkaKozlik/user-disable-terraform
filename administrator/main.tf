@@ -9,6 +9,7 @@ resource "azurerm_storage_account" "storage_account" {
   location                 = azurerm_resource_group.resource_group.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  depends_on = [ azurerm_resource_group.resource_group ]
 }
 
 data "azurerm_client_config" "current_client" {}
