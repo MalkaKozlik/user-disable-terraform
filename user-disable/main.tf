@@ -2,7 +2,7 @@
 #   name     = var.rg_name
 #   location = var.rg_location
 # }
-# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------(ct)
 data "azurerm_resource_group" "resource_group" {
   name     = var.rg_name
 }
@@ -15,7 +15,7 @@ data "azurerm_resource_group" "resource_group" {
 #   account_tier             = "Standard"
 #   account_replication_type = "LRS"
 # }
-# ------------------------------------------------------------------------
+# ------------------------------------------------------------------------(ct)
 data "azurerm_storage_account" "storage_account" {
   name                     = var.storage_account_name
   resource_group_name      = data.azurerm_resource_group.resource_group.name
@@ -27,10 +27,11 @@ data "azurerm_key_vault" "key_vault" {
   resource_group_name = var.key_vault_resource_group_name
 }
 
+# add data. to resource_group_name and location(ct)
 resource "azurerm_service_plan" "service_plan" {
   name                = var.app_service_plan_name
-  resource_group_name = azurerm_storage_account.storage_account.resource_group_name
-  location            = azurerm_storage_account.storage_account.location
+  resource_group_name = data.azurerm_storage_account.storage_account.resource_group_name
+  location            = data.azurerm_storage_account.storage_account.location
   os_type             = "Linux"
   sku_name            = "P1v2"
 }
