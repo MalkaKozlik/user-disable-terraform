@@ -8,7 +8,7 @@ on:
         required: true
 
 env:
-  TF_VAR_subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+  # TF_VAR_subscription_id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
   TF_VAR_DOCKER_REGISTRY_SERVER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
   TF_VAR_DOCKER_REGISTRY_SERVER_USERNAME: ${{ github.actor }}
   TF_VAR_DOCKER_REGISTRY_SERVER_URL: https://ghcr.io
@@ -36,6 +36,10 @@ jobs:
       - name: 🧩 HashiCorp - Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.0
 
+      - name: echo
+        run: |
+          echo ${{ secrets.AZURE_CREDENTIALS.subscriptionId }}
+
       # - name: 🔑 Login to Azure
         # id : az-login
         # run : az login
@@ -43,10 +47,10 @@ jobs:
       - name: 🔑 Login to Azure
         uses: azure/login@v2
         with:
-          auth-type: IDENTITY
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}          
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          # client-id: ${{ secrets.ARM_CLIENT_ID }}          
+          # tenant-id: ${{ secrets.ARM_TENANT_ID }}
+          # subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: 🏗️ Terraform 
         id: init
