@@ -33,25 +33,17 @@ jobs:
 
       - name: 🔑 Login to Azure
         id : az-login
-        # run : az login
         run : az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID 
-      # - name: 🔑 Login to Azure
-        # uses: azure/login@v2
-        # with:
-          # client-id: ${{ secrets.ARM_CLIENT_ID }}          
-          # tenant-id: ${{ secrets.ARM_TENANT_ID }}
-          # subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          # creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: 🏗️ Terraform 
-      #   id: init
-      #   run: |
-      #     DIRECTORIES=( "main-project" )
-      #     for directory in ${DIRECTORIES[@]}; do
-      #       cd ${directory} || exit 1
-      #       terraform init -input=false
-      #       terraform plan -out=tfplan -input=false
-      #       terraform apply -input=false -auto-approve tfplan
-      #       # terraform destroy -auto-approve 
-      #       cd ..  
-      #     done  
+      - name: 🏗️ Terraform 
+        id: init
+        run: |
+          DIRECTORIES=( "main-project" )
+          for directory in ${DIRECTORIES[@]}; do
+            cd ${directory} || exit 1
+            terraform init -input=false
+            terraform plan -out=tfplan -input=false
+            terraform apply -input=false -auto-approve tfplan
+            # terraform destroy -auto-approve 
+            cd ..  
+          done  
