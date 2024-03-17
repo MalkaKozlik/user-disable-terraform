@@ -45,10 +45,10 @@ variable function_app_name {
 
 variable IMAGE_NAME {
   type    = string
-  default = "malkakozlik/user-disable-cicd/func-user-disable-try2"
+  default = "mcr.microsoft.com/azure-functions/dotnet"
 }
 
 variable IMAGE_TAG {
   type    = string
-  default = "v1.0.9"
+  default = "4-appservice-quickstart"
 }
