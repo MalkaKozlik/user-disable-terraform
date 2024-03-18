@@ -35,12 +35,12 @@ variable storage_account_name {
 
 variable app_service_plan_name{
   type    = string
-  default = "app-try-user-disable-automation"
+  default = "app-try-user-disable-automation1"
 }
 
 variable function_app_name {
   type    = string
-  default = "func-user-disable-try2"
+  default = "func-user-disable-try3"
 }
 
 variable IMAGE_NAME {
